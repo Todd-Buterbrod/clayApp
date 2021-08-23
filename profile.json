@@ -1,0 +1,30 @@
+[
+  {
+    "username": "admin",
+    "alternative_name": "Admin",
+    "bio": "ADMIN",
+    "date_of_birth": "2002-12-03",
+    "followers": 1000,
+    "followed": 1000
+  },
+  {
+    "header": "HELLO",
+    "description": "MY FRIENDS",
+    "daily": false,
+    "day_of_week": "[false, false, true, false, false, false, false]",
+    "time": "15:20",
+    "done": 15,
+    "rejected": 35,
+    "profile": 2
+  },
+
+  {
+    "profile": 1,
+    "favorite_task": 1
+  },
+
+  {
+    "author": 4,
+    "follower": 5
+  }
+]
