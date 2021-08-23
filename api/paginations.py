@@ -7,7 +7,7 @@ class PaginationByCreateTime(CursorPagination):
     ordering = '-created'
 
 class PaginationById(CursorPagination):
-    page_size = 100  # default size
+    page_size = 20  # default size
     # max_page_size = 1000
     ordering = '-id'
 

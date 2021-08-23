@@ -50,9 +50,12 @@ def taskGetDetail(request, pk):
 
 @api_view(['GET'])
 def taskList(request):
+    paginator = PaginationByCreateTime()
     tasks = Task.objects.all().filter(deleted=False)
-    serializer = TaskSerializer(tasks, many=True)
-    return Response(serializer.data)
+    context = paginator.paginate_queryset(tasks, request)
+    serializer = TaskSerializer(context, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
 
 @api_view(['GET'])
 def taskListByProfile(request, pk):

@@ -6,6 +6,7 @@ from api.paginations import PaginationById
 from api.models.followingModels import Following
 from api.models.profileModels import Profile
 from api.serializer.followingSerializer import FollowingSerializer, FollowingShowAllSerializer
+from api.serializer.profileSerializer import ProfileSerializer
 
 
 @api_view(['GET'])
@@ -21,9 +22,15 @@ def apiOverview(request):
 
 @api_view(['POST'])
 def followingCreate(request):
+    profile = Profile.objects.get(id=request.data.get("author"))
+    profile2 = Profile.objects.get(id=request.data.get("follower"))
+    profile.followed += int(1)
+    profile2.followers += int(1)
     serializer = FollowingSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        profile.save()
+        profile2.save()
     return Response(serializer.data)
 
 @api_view(['GET'])
