@@ -1,3 +1,6 @@
+import re
+
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
@@ -20,6 +23,14 @@ def apiOverview(request):
 
 @api_view(['POST'])
 def profileCreate(request):
+    username = request.data.get("username")
+    regex = r'^[a-z0-9_]{1,24}$'
+
+    pattern = re.compile(regex)
+    if not re.match(pattern, username):
+        return Response(status=status.HTTP_400_BAD_REQUEST,
+                        data="имя пользователя содержит недопустинмые символы")
+
     serializer = ProfileSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

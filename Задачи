@@ -1,0 +1,6 @@
+Задачи на далёкое будущее:
+1. Добавить переменную "created_time" в модели "favorites" и "following".
+2. После пункта 1 изменить pagination во views "favorites" и "following" c ById на ByCreatedTime.
+
+Задачи на ближайшее будущее:
+1.
