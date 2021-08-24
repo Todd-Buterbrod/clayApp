@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
@@ -14,7 +15,7 @@ def apiOverview(request):
     api_urls = {
         'Following Create': 'create/',
         'Following List': 'list/',
-        'Following Get By Id': 'get-by-id/<str:pk>/',
+        'Following Get': 'get/<str:pk>/',
         'Following Get By Followed Id': 'get-by-followed-id/<str:pk>/',
         'Following Get By Followers Id': 'get-by-followers-id/<str:pk>/',
     }
@@ -27,10 +28,13 @@ def followingCreate(request):
     profile.followed += int(1)
     profile2.followers += int(1)
     serializer = FollowingSerializer(data=request.data)
-    if serializer.is_valid():
+    if profile.id != profile2.id and serializer.is_valid():
         serializer.save()
         profile.save()
         profile2.save()
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST,
+                        data="Нельзя подписаться на самого себя или такая связь уже существует")
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -42,7 +46,7 @@ def followingList(request):
     return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET'])
-def followingGetById(request, pk):
+def followingGet(request, pk):
     following = Following.objects.all().filter(id=pk)
     serializer = FollowingShowAllSerializer(following, many=True)
     return Response(serializer.data)

@@ -2,7 +2,7 @@ from rest_framework.pagination import CursorPagination
 
 
 class PaginationByCreateTime(CursorPagination):
-    page_size = 3  # default size
+    page_size = 16  # default size
     # max_page_size = 1000
     ordering = '-created'
 

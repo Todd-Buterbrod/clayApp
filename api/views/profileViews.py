@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 from api.models.profileModels import Profile
+from api.paginations import PaginationById, PaginationByCreateTime
 from api.serializer.profileSerializer import ProfileSerializer
 from api.serializer.profileSerializer import ProfileUpdateSerializer
 
@@ -26,9 +27,11 @@ def profileCreate(request):
 
 @api_view(['GET'])
 def profileList(request):
+    paginator = PaginationByCreateTime()
     profiles = Profile.objects.all()
-    serializer = ProfileSerializer(profiles, many=True)
-    return Response(serializer.data)
+    context = paginator.paginate_queryset(profiles, request)
+    serializer = ProfileSerializer(context, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET'])
 def profileGet(request, pk):
