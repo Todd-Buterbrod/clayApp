@@ -14,6 +14,7 @@ from api.serializer.profileSerializer import ProfileSerializer
 def apiOverview(request):
     api_urls = {
         'Following Create': 'create/',
+        'Following Delete': 'delete/<str:pk>/',
         'Following List': 'list/',
         'Following Get': 'get/<str:pk>/',
         'Following Get By Followed Id': 'get-by-followed-id/<str:pk>/',
@@ -36,6 +37,13 @@ def followingCreate(request):
         return Response(status=status.HTTP_400_BAD_REQUEST,
                         data="Нельзя подписаться на самого себя или такая связь уже существует")
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def followingDelete(request, pk):
+    following = Following.objects.get(id=pk)
+    following.delete()
+    return Response("This Following Deleted")
 
 @api_view(['GET'])
 def followingList(request):

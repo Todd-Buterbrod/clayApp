@@ -25,15 +25,15 @@ def apiOverview(request):
 def profileCreate(request):
     username = request.data.get("username")
     regex = r'^[a-z0-9_]{1,24}$'
-
     pattern = re.compile(regex)
     if not re.match(pattern, username):
         return Response(status=status.HTTP_400_BAD_REQUEST,
-                        data="имя пользователя содержит недопустинмые символы")
-
+                        data="Имя пользователя должно состоять из 1-24 символов и может содержать только строчные буквы латинского алфавита от a до z, цифры от 0 до 9 и символ нижнего подчеркивания _")
     serializer = ProfileSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST, data="Такое имя уже существует")
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -54,7 +54,15 @@ def profileGet(request, pk):
 @permission_classes([IsAuthenticated])
 def profileUpdate(request, pk):
     profile = Profile.objects.get(id=pk)
-    serializer = ProfileUpdateSerializer(instance=profile, data=request.data)
+    username = request.data.get("username")
+    regex = r'^[a-z0-9_]{1,24}$'
+    pattern = re.compile(regex)
+    if not re.match(pattern, username):
+        return Response(status=status.HTTP_400_BAD_REQUEST,
+                        data="Имя пользователя должно состоять из 1-24 символов и может содержать только строчные буквы латинского алфавита от a до z, цифры от 0 до 9 и символ нижнего подчеркивания _")
+    serializer = ProfileUpdateSerializer(profile, data=request.data)
     if serializer.is_valid():
         serializer.save()
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST, data="Такое имя уже существует")
     return Response(serializer.data)
