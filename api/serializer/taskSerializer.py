@@ -13,7 +13,7 @@ class TaskSerializer(serializers.ModelSerializer):
 class TaskListByProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ('header', 'time', 'done', 'rejected', 'id', 'profile')
+        fields = ('header', 'time', 'daily', 'day_of_week', 'done', 'rejected', 'id', 'profile')
 
 class TaskGetDetailSerializer(serializers.ModelSerializer):
     class Meta:
