@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/task/', include('api.urls.taskUrls')),
     path('api/following/', include('api.urls.followingUrls')),
     path('api/favorites/', include('api.urls.favoritesUrls')),
+    path('api/image/', include('api.urls.imageUrls')),
 ]
