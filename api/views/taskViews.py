@@ -53,7 +53,7 @@ def taskList(request):
     paginator = PaginationByCreateTime()
     tasks = Task.objects.all().filter(deleted=False)
     context = paginator.paginate_queryset(tasks, request)
-    serializer = TaskSerializer(context, many=True)
+    serializer = TaskWithUsernameSerializer(context, many=True)
     return paginator.get_paginated_response(serializer.data)
 
 
@@ -66,7 +66,6 @@ def taskListByProfile(request, pk):
     return paginator.get_paginated_response(serializer.data)
 
 @api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
 def taskDelete(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()

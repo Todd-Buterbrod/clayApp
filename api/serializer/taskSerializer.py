@@ -13,12 +13,12 @@ class TaskSerializer(serializers.ModelSerializer):
 class TaskListByProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ('header', 'time', 'daily', 'day_of_week', 'done', 'rejected', 'id', 'profile')
+        fields = ('header', 'time', 'edit_time', 'daily', 'day_of_week', 'done', 'rejected', 'id', 'profile')
 
 class TaskGetDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ('header', 'time', 'daily', 'day_of_week', 'description', 'done', 'rejected', 'created', 'id')
+        fields = ('header', 'time', 'edit_time', 'daily', 'day_of_week', 'description', 'done', 'rejected', 'created', 'id')
 
 class TaskUpdateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,4 +29,4 @@ class TaskWithUsernameSerializer(serializers.ModelSerializer):
     profile = ProfileUsernameAndIdSerializer()
     class Meta:
         model = Task
-        fields = ('header', 'time', 'daily', 'day_of_week', 'description', 'done', 'rejected', 'id', 'profile')
+        fields = ('header', 'time', 'edit_time', 'daily', 'day_of_week', 'description', 'done', 'rejected', 'id', 'profile')
