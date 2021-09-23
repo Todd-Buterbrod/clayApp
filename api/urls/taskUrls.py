@@ -10,5 +10,7 @@ urlpatterns = [
     path('list/', taskViews.taskList, name="task-list"),
     path('list/<str:pk>/', taskViews.taskListByProfile, name="task-list-by-profile"),
     path('delete/<str:pk>/', taskViews.taskDelete, name="task-delete"),
-    path('get-with-username/<str:pk>/', taskViews.taskGetWithUsername, name="task-get-with-username")
+    path('get-with-username/<str:pk>/', taskViews.taskGetWithUsername, name="task-get-with-username"),
+    path('done/<str:pk>/', taskViews.taskDone, name="task-done"),
+    path('rejected/<str:pk>/', taskViews.taskRejected, name="task-rejected")
 ]

@@ -25,6 +25,8 @@ def apiOverview(request):
         'Task List By Profile': '/list/<str:pk>/',
         'Task Delete': '/delete/<str:pk>/',
         'Task Get With Username': '/get-with-username/<str:pk>/',
+        'Task Done': '/done/<str:pk>/',
+        'Task Rejected': '/rejected/<str:pk>/',
     }
     return Response(api_urls)
 
@@ -93,4 +95,18 @@ def taskUpdate(request, pk):
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data="Истекло время редактирования")
     except:
         return Response(status=status.HTTP_404_NOT_FOUND, data="Запись не найдена")
+
+@api_view(['POST'])
+def taskDone(request, pk):
+    task = Task.objects.get(id=pk)
+    task.done += int(1)
+    task.save()
+    return Response()
+
+@api_view(['POST'])
+def taskRejected(request, pk):
+    task = Task.objects.get(id=pk)
+    task.rejected += int(1)
+    task.save()
+    return Response()
 
